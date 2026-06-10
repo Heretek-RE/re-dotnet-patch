@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "re-dotnet-patch"
+version = "0.1.0"
+description = "MCP server for structured patching of Mono / .NET assemblies: method-body NOP, ldstr replacement, round-trip preservation of the type graph. Closes the gap left by re-patch (byte-splice only)."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+keywords = ["mcp", "patch", "dotnet", "mono", "cil", "il", "reverse-engineering"]
+authors = [{name = "John"}]
+dependencies = [
+    "mcp[cli]>=1.2",
+    "pydantic>=2.6",
+]
+
+# WS-7 + C8 (v2.8.1): the round-trip patcher is the Mono.Cecil
+# CLI shim at servers/re-dotnet-patch/dotnet/Patcher.Cli/. The
+# Python MCP server is pure-Python and contains no .NET interop
+# deps (no pythonnet). The .NET backend is built by install.sh
+# via `dotnet publish` and lives at
+# servers/re-dotnet-patch/bin/patcher-cli. See Patcher.cs for the
+# 4 round-trip implementations (nop-method, replace-method-body,
+# replace-string-ldstr, patch-assembly).
+[project.optional-dependencies]
+patcher = []  # no Python-side .NET deps; the .NET CLI is built at install time
+
+[project.scripts]
+re-dotnet-patch = "re_dotnet_patch.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"

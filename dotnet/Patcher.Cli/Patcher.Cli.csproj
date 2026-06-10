@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Re.Dotnet.Patch.Cli</RootNamespace>
+    <AssemblyName>patcher-cli</AssemblyName>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>embedded</DebugType>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <!--
+    C8 (v2.8.1): real round-trip Mono.Cecil backend for re-dotnet-patch.
+    Mono.Cecil is LGPL-2.1 (attribute-only, does not contaminate
+    the closed-source PE that Patcher.Cli writes, which is what
+    re-dotnet's README contract requires).
+
+    For Windows hosts, override the RID at publish time (the default
+    RID is linux-x64, matching the v2.8.0 install.sh pattern for
+    re-dotnet-cli). Run `dotnet publish` with the desired RID
+    parameter to publish for a different platform.
+  -->
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Cecil" Version="0.11.5" />
+  </ItemGroup>
+
+</Project>

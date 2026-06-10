@@ -1,0 +1,1 @@
+"""re-dotnet-patch — MCP server for structured patching of Mono / .NET assemblies: method-body NOP, ldstr replacement, round-trip preservation of the type graph. Pure-Python skeleton in v2.8.0 (structured not_implemented returns); v2.8.1 lands the real round-trip patcher dep."""
